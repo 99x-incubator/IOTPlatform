@@ -64,6 +64,10 @@ functions:
   
   snsTopics:
     handler: handlers/sns-handler.snsTopics
+    event:
+      - http:
+          path: /sns
+          method: post
 
   log:
     handler: handlers/log-handler.log

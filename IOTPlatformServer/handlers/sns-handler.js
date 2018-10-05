@@ -4,11 +4,14 @@ const AWS = require('aws-sdk');
 AWS.config.update({ region: 'REGION' });
 
 module.exports.snsTopics = (event, context, callback) => {
+    const data = JSON.stringify(event.body);
+    const message = data.message;
+    const topic = data.topic;
 
     // Create publish parameters
     var params = {
-        Message: 'MESSAGE_TEXT', /* required */
-        TopicArn: 'TOPIC_ARN'
+        Message: message, /* required */
+        TopicArn: topic
     };
 
     // Create promise and SNS service object
