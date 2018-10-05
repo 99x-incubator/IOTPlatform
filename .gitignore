@@ -3,6 +3,7 @@ IOTPlatformServer/node_modules
 IOTPlatformServer/.env
 IOTPlatformClient/node_modules
 IOTPlatformClient/dist
+IOTPlatformServer/config
 /.idea
 /.vscode
 .project
