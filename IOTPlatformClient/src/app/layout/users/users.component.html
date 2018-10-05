@@ -1,0 +1,66 @@
+<app-page-header [heading]="'Users'" [icon]="'fa-users'"></app-page-header>
+
+<div class="row">
+  <div class="col col-sm-12">
+    <input type="button" class="btn btn-primary" value="Create User" (click)="openCreateUserModal()">
+  </div>
+</div>
+
+<ngx-smart-modal #myModal identifier="myModal" [dismissable]="false">
+  <div class="row">
+    <div class="col col-sm-12">
+      <form [formGroup]="userForm" (ngSubmit)="(isEditable) ? updateUser() : addUser()" role="form">
+        <div class="card mb-6">
+          <div class="card-header">
+            <span *ngIf="!isEditable">Create User</span>
+            <span *ngIf="isEditable">Update User</span>
+          </div>
+
+          <div class="card-body">
+            <div class="row name-row">
+              <div class="col-sm-6">
+                <input type="text" class="form-control input-underline input-lg" placeholder="First Name"
+                  formControlName="firstName">
+                <small class="text-danger" *ngIf="userForm.get('firstName').dirty && !userForm.get('firstName').valid">
+                  Provide user first name
+                </small>
+              </div>
+
+              <div class="col-sm-6">
+                <input type="text" class="form-control input-underline input-lg" placeholder="Last Name"
+                  formControlName="lastName">
+                <small class="text-danger" *ngIf="userForm.get('lastName').dirty && !userForm.get('lastName').valid">
+                  Provide user last name
+                </small>
+              </div>
+            </div>
+            <div class="row email-row">
+                <div class="col-sm-12">
+                  <input type="email" class="form-control input-underline input-lg" placeholder="Email" formControlName="email">
+                  <small class="text-danger" *ngIf="userForm.get('email').dirty && !userForm.get('email').valid">
+                    Provide user email
+                  </small>
+                </div>
+              </div>
+
+            <div class="row email-row">
+              <div class="col-sm-12">
+                <input type="email" class="form-control input-underline input-lg" placeholder="Mobile No" formControlName="mobileNo">
+                <small class="text-danger" *ngIf="userForm.get('mobileNo').dirty && !userForm.get('mobileNo').valid">
+                  Provide user Mobile No
+                </small>
+              </div>
+            </div>
+
+          </div>
+          <div class="card-footer">
+            <input type="submit" class="btn btn-info btn-sm" value="Add User" [disabled]="!userForm.valid" *ngIf="!isEditable">
+            <input type="submit" class="btn btn-info btn-sm" value="Update User" [disabled]="!userForm.valid" *ngIf="isEditable">
+          </div>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+</ngx-smart-modal>
