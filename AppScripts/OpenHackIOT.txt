@@ -1,0 +1,28 @@
+function getReceiverDetails(params) {
+  //params= {type:'Biscuit', location:'HQ-2'};
+  
+  var sheet = SpreadsheetApp.getActive().getSheets()[0];
+  var dataRange = sheet.getDataRange();
+  var numberOfRows = dataRange.getNumRows();
+  
+  var person = "";
+  var mobileNo = "";
+  for(var i = 2 ; i <= numberOfRows; ++ i){
+    var location = dataRange.getCell(i, 2).getValue();
+    var type = dataRange.getCell(i,1).getValue();
+    
+    if(location == params.location && type == params.type){
+      person =  dataRange.getCell(i, 3).getValue();
+      mobileNo = dataRange.getCell(i, 4).getValue();
+    }
+    
+  }
+  
+  var receiverDetails = {
+    person:person,
+    mobileNo:mobileNo
+  }
+  
+  return receiverDetails;
+};
+
