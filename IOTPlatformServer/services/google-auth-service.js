@@ -1,7 +1,5 @@
 'use strict';
-const { auth } = require('google-auth-library');
-const { clientSecret } = require('../configs/google/client-secrets');
-const { credentials } = require('../configs/google/credentials');
+const { OAuth2Client } = require('google-auth-library');
 
 module.exports = {
 	getGoogleAuthClient: () => {
@@ -13,8 +11,8 @@ module.exports = {
 
 		oauth2Client.setCredentials({
 			access_token: process.env.ACCESS_TOKEN,
-			refresh_token: credentials.REFRESH_TOKEN,
-			expiry_date: credentials.EXPIRY_DATE
+			refresh_token: process.env.REFRESH_TOKEN,
+			expiry_date: process.env.EXPIRY_DATE
 		});
 
 		return oauth2Client;
