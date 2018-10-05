@@ -8,6 +8,10 @@
             <i class="fa fa-fw fa-users"></i>&nbsp;
             <span>{{ 'Users' | translate }}</span>
         </a>
+        <a [routerLink]="['/topics']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <i class="fa fa-fw fa-bookmark"></i>&nbsp;
+            <span>{{ 'Topics' | translate }}</span>
+        </a>
         <!-- <a [routerLink]="['/charts']" [routerLinkActive]="['router-link-active']" class="list-group-item">
             <i class="fa fa-fw fa-bar-chart-o"></i>&nbsp;
             <span>{{ 'Charts' | translate }}</span>
