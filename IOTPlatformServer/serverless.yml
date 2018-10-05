@@ -82,7 +82,13 @@ functions:
       - http:
           path: /device
           method: post
-          cors: true
+
+  test:
+    handler: handlers/test.test
+    events:
+      - http:
+          path: /test
+          method: get
 
 # you can add CloudFormation resource templates here
 resources:
