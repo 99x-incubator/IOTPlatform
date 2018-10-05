@@ -2,30 +2,38 @@
 const AWS = require('aws-sdk');
 
 module.exports.snsTopics = (event, context, callback) => {
-    console.log(event);
-    const data = JSON.stringify(event.body);
-    console.log(data);
-    const message = data.message;
-    const topic = data.topic;
+    event = {
+      body:{
+        type:'Biscuit',
+        location:'Hq-1',
+        mobileNo:'+94714392170'
+      }
+    };
+      
+    var type = event.body.type;
+    var location = event.body.location;
+    var mobileNo = event.body.mobileNo;
 
-    // Create publish parameters
+    AWS.config.update({region: 'us-east-1'});
+
     var params = {
-        Message: message, /* required */
-        TopicArn: topic
+      Message: type +' needed in '+location, /* required */
+      PhoneNumber: mobileNo,
     };
 
-    console.log(params);
-    // Create promise and SNS service object
-    var publishTextPromise = new AWS.SNS({ apiVersion: '2010-03-31' }).publish(params).promise();
+    
 
+    var publishTextPromise = new AWS.SNS({apiVersion: '2010-03-31'}).publish(params).promise();
+    
     // Handle promise's fulfilled/rejected states
     publishTextPromise.then(
-        function (data) {
-            console.log(`Message ${params.Message} send sent to the topic ${params.TopicArn}`);
-            console.log("MessageID is " + data.MessageId);
-        }).catch(
-            function (err) {
-                console.error(err, err.stack);
-            });
+      function(data) {
+        console.log("MessageID is " + data.MessageId);
+      }).catch(
+        function(err) {
+        console.error(err, err.stack);
+      });
+
+    callback(null,{name:'Namila'});
 
 };
