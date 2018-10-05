@@ -32,6 +32,7 @@ provider:
   # you can define service wide environment variables here
   environment:
     DYNAMODB_TABLE: ${self:service}-${opt:stage, self:provider.stage}
+    GOOGLE_SCRIPT_API_VERSION: v1
   iamRoleStatements:
     - Effect: Allow
       Action:
@@ -75,6 +76,14 @@ functions:
       - http:
           path: /publish-message
           method: post
+
+  deviceHandler:
+    handler: handlers/deviceHandler.deviceHandler
+    events:
+      - http:
+          path: /device
+          method: post
+          cors: true
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
