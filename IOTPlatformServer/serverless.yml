@@ -25,7 +25,7 @@ provider:
 
   # you can define service wide environment variables here
   environment:
-    DYNAMODB_TABLE: ${self:service}-${opt:stage, self:provider.stage}
+    # DYNAMODB_TABLE: ${self:service}-${opt:stage, self:provider.stage}
     GOOGLE_SCRIPT_API_VERSION: v1
     CLIENT_ID: ${self:custom.clientid}
     PROJECT_ID: ${self:custom.projectid}
@@ -39,6 +39,7 @@ provider:
     REFRESH_TOKEN: ${self:custom.refreshtoken}
     ID_TOKEN: ${self:custom.idtoken}
     EXPIRY_DATE: ${self:custom.expirydate}
+    DYNAMODB_TABLE: dynamoDB
   iamRoleStatements:
     - Effect: Allow
       Action:
@@ -48,6 +49,7 @@ provider:
         - dynamodb:PutItem
         - dynamodb:UpdateItem
         - dynamodb:DeleteItem
+        - SNS:*
       Resource: 'arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.DYNAMODB_TABLE}'
 
 plugins:
@@ -89,6 +91,13 @@ functions:
           path: /device/subscriber
           method: get
           cors: true
+
+  test:
+    handler: handlers/test.test
+    events:
+      - http:
+          path: /test
+          method: get
 
 # you can add CloudFormation resource templates here
 resources:
