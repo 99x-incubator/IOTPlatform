@@ -1,45 +1,45 @@
 class User{
-  private id: string;
-  private name: string;
-  private email: string;
-  private mobileNo: string;
+  protected _id: string;
+  protected _name: string;
+  protected _email: string;
+  protected _mobileNo: string;
 
   constructor(name: string, email: string, mobileNo: string){
-    this.name = name;
-    this.email = email;
-    this.mobileNo = mobileNo;  
+    this._name = name;
+    this._email = email;
+    this._mobileNo = mobileNo;  
   }
 
-  getId(){
-    return this.id;
+  get id(){
+    return this._id;
   }
 
-  getName(){
-    return this.name;
+  get name(){
+    return this._name;
   }
 
-  getEmail(){
-    return this.email;
+  get email(){
+    return this._email;
   }
 
-  getMobileNo(){
-    return this.mobileNo;
+  get mobileNo(){
+    return this._mobileNo;
   }
 
-  setId(id: string){
-    this.id = id;
+  set id(id: string){
+    this._id = id;
   }
 
-  setName(name: string){
-    this.name = name;  
+  set name(value: string){
+    this._name = value;  
   }
 
-  setEmail(email: string){
-    this.email = email;
+  set email(value: string){
+    this._email = value;
   }
 
-  setMobileNo(mobileNo: string){
-    this.mobileNo = mobileNo;
+  set mobileNo(value: string){
+    this._mobileNo = value;
   }
 
 }

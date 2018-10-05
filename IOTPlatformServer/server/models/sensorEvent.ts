@@ -1,11 +1,11 @@
 class SensorEvent{
-  private id;
+  private _id;
   
-    getId(){
-      return this.id;
+    get id(){
+      return this._id;
     }
   
-    setId(id: string){
-      this.id = id;
+    set id(value: string){
+      this._id = value;
     }
 }

@@ -1,25 +1,25 @@
 class EventSubscription{
-  private event: SensorEvent;
-  private user: User;
+  private _event: SensorEvent;
+  private _user: User;
 
   constructor(event: SensorEvent, user: User){
-    this.event = event;
-    this.user = user;  
+    this._event = event;
+    this._user = user;  
   }
 
-  getEvent(){
-    return this.event;
+  get event(){
+    return this._event;
   }
 
-  getUser(){
-    return this.user;
+  get user(){
+    return this._user;
   }
 
-  setEvent(event: SensorEvent){
-    this.event = event;
+  set event(value: SensorEvent){
+    this._event = value;
   }
 
-  setUser(user: User){
-    this.user = user;
+  set user(value: User){
+    this._user = value;
   }
 }
