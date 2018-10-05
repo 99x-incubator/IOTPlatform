@@ -4,7 +4,8 @@
   "description": "IOT server to handle backend",
   "main": "handler.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start-dev": "serverless offline start"
   },
   "repository": {
     "type": "git",
@@ -23,6 +24,7 @@
     "serverless-offline": "^3.27.0"
   },
   "dependencies": {
-    "aws-sdk": "^2.328.0"
+    "aws-sdk": "^2.328.0",
+    "uuid": "^3.3.2"
   }
 }
