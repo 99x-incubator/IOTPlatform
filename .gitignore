@@ -9,3 +9,5 @@ IOTPlatformClient/dist
 .classpath
 *.launch
 .settings/
+
+IOTPlatformButtonDevice/credentials.lua
