@@ -61,6 +61,9 @@ functions:
       - http:
           path: /user
           method: post
+  
+  snsTopics:
+    handler: handlers/sns-handler.snsTopics
 
   log:
     handler: handlers/log-handler.log
@@ -123,3 +126,58 @@ resources:
 #     NewOutput:
 #       Description: "Description for the output"
 #       Value: "Some output value"
+
+components:
+  myAwsSnsTopic:
+    type: aws-sns-topic
+    inputs:
+      displayName: My SNS Topic display name
+      policy:
+        Version: '2008-10-17'
+        Id: policy_id
+        Statement:
+          - Effect: Allow
+            Sid: statement_id
+            Principal:
+              AWS: '*'
+            Action:
+              - 'SNS:Publish'
+              - 'SNS:RemovePermission'
+              - 'SNS:SetTopicAttributes'
+              - 'SNS:DeleteTopic'
+              - 'SNS:ListSubscriptionsByTopic'
+              - 'SNS:GetTopicAttributes'
+              - 'SNS:Receive'
+              - 'SNS:AddPermission'
+              - 'SNS:Subscribe'
+            Resource: 'arn:aws:sns:us-east-1:534288293305:sns-call'
+            Condition:
+              StringEquals:
+                'AWS:SourceOwner': '534288293305'
+      deliveryPolicy:
+        http:
+          defaultHealthyRetryPolicy:
+            minDelayTarget: 20
+            maxDelayTarget: 20
+            numRetries: 1
+            numMaxDelayRetries: 0
+            numNoDelayRetries: 0
+            numMinDelayRetries: 2
+            backoffFunction: linear
+          disableSubscriptionOverrides: true
+          defaultThrottlePolicy:
+            maxReceivesPerSecond: 3
+      deliveryStatusAttributes:
+        # - ApplicationSuccessFeedbackRoleArn: 'arn:aws:iam::000000000000:role/sns-success-feedback-role'
+        #   ApplicationSuccessFeedbackSampleRate: 100
+        #   ApplicationFailureFeedbackRoleArn: 'arn:aws:iam::000000000000:role/sns-failure-feedback-role'
+        # - HTTPSuccessFeedbackRoleArn: 'arn:aws:iam::000000000000:role/sns-success-feedback-role'
+        #   HTTPSuccessFeedbackSampleRate: 100
+        #   HTTPFailureFeedbackRoleArn: 'arn:aws:iam::000000000000:role/sns-failure-feedback-role'
+        # - LambdaSuccessFeedbackRoleArn: 'arn:aws:iam::000000000000:role/sns-success-feedback-role'
+        #   LambdaSuccessFeedbackSampleRate: 100
+        #   LambdaFailureFeedbackRoleArn: 'arn:aws:iam::000000000000:role/sns-success-feedback-role'
+        # - SQSSuccessFeedbackRoleArn: 'arn:aws:iam::000000000000:role/sns-success-feedback-role'
+        #   SQSSuccessFeedbackSampleRate: 100
+        #   SQSFailureFeedbackRoleArn: 'arn:aws:iam::000000000000:role/sns-success-feedback-role'
+      name: 'sns-call'
