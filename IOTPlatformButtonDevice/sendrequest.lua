@@ -2,27 +2,13 @@
 -- requires keys.lua not included in git repo, which defines keys required.
 dofile("keys.lua")
 
-conn = nil
-conn=net.createConnection(net.TCP, 0) 
-
-conn:on("receive", function(conn, payload) 
-     print(payload) 
-     end) 
-     
-conn:on("connection", function(conn, payload) 
-     print('\nConnected') 
-     conn:send("GET /trigger/button_boinked/with/key/"
-      ..IFTTT_KEY
-      .." HTTP/1.1\r\n" 
-      .."Host: maker.ifttt.com\r\n"
-      .."Accept: */*\r\n" 
-      .."User-Agent: Mozilla/4.0 (compatible; esp8266 Lua; Windows NT 5.1)\r\n" 
-      .."\r\n")
-     end) 
-     
-conn:on("disconnection", function(conn, payload) 
-      print('\nDisconnected') 
-      end)
-      
-print('Posting to ifttt.com')                                    
-conn:connect(80,'maker.ifttt.com')
+http.post('http://localhost:3000/posts',
+  'Content-Type: application/json\r\n',
+  '{"id": 7,"title": "from-button","author": "boinker"}',
+  function(code, data)
+    if (code < 0) then
+      print("HTTP request failed")
+    else
+      print(code, data)
+    end
+  end)
