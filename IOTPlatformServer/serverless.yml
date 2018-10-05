@@ -60,9 +60,9 @@ functions:
           path: /user
           method: post
   
-  snsTopics:
+  snstopics:
     handler: handlers/sns-handler.snsTopics
-    event:
+    events:
       - http:
           path: /sns
           method: post
@@ -73,6 +73,14 @@ functions:
       - http:
           path: /publish-message
           method: post
+
+  deviceHandler:
+    handler: handlers/deviceHandler.deviceHandler
+    events:
+      - http:
+          path: /device
+          method: post
+          cors: true
 
 # you can add CloudFormation resource templates here
 resources:
@@ -91,6 +99,31 @@ resources:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
         TableName: ${self:provider.environment.DYNAMODB_TABLE}
+    SnsSMSTopic:
+      Type: AWS::SNS::Topic
+      Properties:
+        DisplayName: First SNS Topic
+        TopicName: sms-sns-stream
+    SnsSkypeTopic:
+      Type: AWS::SNS::Topic
+      Properties:
+        DisplayName: Second SNS Topic
+        TopicName: skype-sns-stream
+    SnsTopicPolicy:
+      Type: AWS::SNS::TopicPolicy
+      Properties:
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+          - Sid: SnsTopicPolicy
+            Effect: Allow
+            Principal:
+              Service: s3.amazonaws.com
+            Action: sns:Publish
+            Resource: "*"
+        Topics:
+          - Ref: SnsSMSTopic
+          - Ref: SnsSkypeTopic
 #  Outputs:
 #     NewOutput:
 #       Description: "Description for the output"

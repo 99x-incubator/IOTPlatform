@@ -1,10 +1,10 @@
 'use strict';
 const AWS = require('aws-sdk');
 
-AWS.config.update({ region: 'REGION' });
-
 module.exports.snsTopics = (event, context, callback) => {
+    console.log(event);
     const data = JSON.stringify(event.body);
+    console.log(data);
     const message = data.message;
     const topic = data.topic;
 
@@ -14,6 +14,7 @@ module.exports.snsTopics = (event, context, callback) => {
         TopicArn: topic
     };
 
+    console.log(params);
     // Create promise and SNS service object
     var publishTextPromise = new AWS.SNS({ apiVersion: '2010-03-31' }).publish(params).promise();
 

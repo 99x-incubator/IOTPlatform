@@ -10,3 +10,5 @@ IOTPlatformServer/config
 .classpath
 *.launch
 .settings/
+
+IOTPlatformButtonDevice/credentials.lua
