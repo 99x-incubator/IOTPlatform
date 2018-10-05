@@ -35,17 +35,18 @@
               </div>
             </div>
             <div class="row email-row">
-                <div class="col-sm-12">
-                  <input type="email" class="form-control input-underline input-lg" placeholder="Email" formControlName="email">
-                  <small class="text-danger" *ngIf="userForm.get('email').dirty && !userForm.get('email').valid">
-                    Provide user email
-                  </small>
-                </div>
+              <div class="col-sm-12">
+                <input type="email" class="form-control input-underline input-lg" placeholder="Email" formControlName="email">
+                <small class="text-danger" *ngIf="userForm.get('email').dirty && !userForm.get('email').valid">
+                  Provide user email
+                </small>
               </div>
+            </div>
 
             <div class="row email-row">
               <div class="col-sm-12">
-                <input type="email" class="form-control input-underline input-lg" placeholder="Mobile No" formControlName="mobileNo">
+                <input type="tel" class="form-control input-underline input-lg" placeholder="Mobile No"
+                  formControlName="mobileNo">
                 <small class="text-danger" *ngIf="userForm.get('mobileNo').dirty && !userForm.get('mobileNo').valid">
                   Provide user Mobile No
                 </small>
@@ -64,3 +65,35 @@
     </div>
   </div>
 </ngx-smart-modal>
+
+<div class="row datatable-row">
+  <div class="col-sm-12">
+    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+      <thead>
+        <tr>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Email</th>
+          <th>Mobile No</th>
+          <th>Functions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of userList; let i=index">
+          <td>{{ user.firstName }}</td>
+          <td>{{ user.lastName }}</td>
+          <td>{{user.email}}</td>
+          <td>{{ user.mobileNo }}</td>
+          <td>
+            <button class="btn btn-warning" (click)="openModalForUserUpdate(i)" style="margin-right: 10px">
+              <i class="fa fa-edit"></i>
+            </button>
+            <button class="btn btn-danger" (click)="removeUser(i)">
+              <i class="fa fa-trash-o"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

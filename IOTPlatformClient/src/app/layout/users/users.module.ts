@@ -7,6 +7,7 @@ import { PageHeaderModule } from '../../shared';
 import { NgxSmartModalModule, NgxSmartModalService } from 'ngx-smart-modal';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DataTablesModule } from 'angular-datatables';
+import { UsersService } from './users.service';
 
 @NgModule({
   imports: [
@@ -19,6 +20,6 @@ import { DataTablesModule } from 'angular-datatables';
     DataTablesModule
   ],
   declarations: [UsersComponent],
-  providers: [NgxSmartModalService]
+  providers: [NgxSmartModalService, UsersService]
 })
 export class UsersModule { }
