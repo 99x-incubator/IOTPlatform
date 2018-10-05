@@ -19,7 +19,7 @@ npm run test
 
 ---
 
-## Install Dependencies
+##  Install Dependencies
 
 Install all package dependencies (one time operation)
 
