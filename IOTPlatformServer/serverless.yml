@@ -44,6 +44,7 @@ provider:
   # you can define service wide environment variables here
   environment:
     DYNAMODB_TABLE: ${self:service}-${opt:stage, self:provider.stage}
+    GOOGLE_SCRIPT_API_VERSION: v1
   iamRoleStatements:
     - Effect: Allow
       Action:

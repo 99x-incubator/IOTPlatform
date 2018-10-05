@@ -23,6 +23,8 @@
     "serverless-offline": "^3.27.0"
   },
   "dependencies": {
-    "aws-sdk": "^2.328.0"
+    "aws-sdk": "^2.328.0",
+    "google-auth-library": "^2.0.0",
+    "googleapis": "^27.0.0"
   }
 }
