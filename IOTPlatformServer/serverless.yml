@@ -1,8 +1,18 @@
 service: iot-platform
 
-# You can pin your service to only deploy with a specific Serverless version
-# Check out our docs for more details
-# frameworkVersion: "=X.X.X"
+custom:
+  clientid: ${ssm:/biscuit/iot/prod/clientid}
+  projectid: ${ssm:/biscuit/iot/prod/projectid}
+  authuri: ${ssm:/biscuit/iot/prod/authuri}
+  tokenuri: ${ssm:/biscuit/iot/prod/tokenuri}
+  authproviderx509certurl: ${ssm:/biscuit/iot/prod/authproviderx509certurl}
+  clientsecret: ${ssm:/biscuit/iot/prod/clientsecret~true}
+  redirecturis: ${ssm:/biscuit/iot/prod/redirecturis~true}
+  accesstoken: ${ssm:/biscuit/iot/prod/accesstoken~true}
+  tokentype: ${ssm:/biscuit/iot/prod/tokentype~true}
+  refreshtoken: ${ssm:/biscuit/iot/prod/refreshtoken~true}
+  idtoken: ${ssm:/biscuit/iot/prod/idtoken~true}
+  expirydate: ${ssm:/biscuit/iot/prod/expirydate}
 
 provider:
   name: aws
@@ -13,26 +23,21 @@ provider:
   stage: dev
   region: us-east-1
 
-  # you can add statements to the Lambda function's IAM Role here
-  #  iamRoleStatements:
-  #    - Effect: "Allow"
-  #      Action:
-  #        - "s3:ListBucket"
-  #      Resource: { "Fn::Join" : ["", ["arn:aws:s3:::", { "Ref" : "ServerlessDeploymentBucket" } ] ]  }
-  #    - Effect: "Allow"
-  #      Action:
-  #        - "s3:PutObject"
-  #      Resource:
-  #        Fn::Join:
-  #          - ""
-  #          - - "arn:aws:s3:::"
-  #            - "Ref" : "ServerlessDeploymentBucket"
-  #            - "/*"
-
   # you can define service wide environment variables here
   environment:
-    DYNAMODB_TABLE: ${self:service}-${opt:stage, self:provider.stage}
     GOOGLE_SCRIPT_API_VERSION: v1
+    CLIENT_ID: ${self:custom.clientid}
+    PROJECT_ID: ${self:custom.projectid}
+    AUTH_URL: ${self:custom.authuri}
+    TOKEN_URI: ${self:custom.tokenuri}
+    AUTHPROVIDER_X509_CERT_URL: ${self:custom.authproviderx509certurl}
+    CLIENT_SECRET: ${self:custom.clientsecret}
+    REDIRECT_URIS: ${self:custom.redirecturis}
+    ACCESS_TOKEN: ${self:custom.accesstoken}
+    TOKEN_TYPE: ${self:custom.tokentype}
+    REFRESH_TOKEN: ${self:custom.refreshtoken}
+    ID_TOKEN: ${self:custom.idtoken}
+    EXPIRY_DATE: ${self:custom.expirydate}
   iamRoleStatements:
     - Effect: Allow
       Action:
@@ -44,14 +49,6 @@ provider:
         - dynamodb:DeleteItem
       Resource: 'arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.DYNAMODB_TABLE}'
 
-# you can add packaging information here
-#package:
-#  include:
-#    - include-me.js
-#    - include-me-dir/**
-#  exclude:
-#    - exclude-me.js
-#    - exclude-me-dir/**
 plugins:
   - serverless-offline
 
@@ -76,39 +73,6 @@ functions:
       - http:
           path: /publish-message
           method: post
-
-#    The following are a few example events you can configure
-#    NOTE: Please make sure to change your handler code to work with those events
-#    Check the event documentation for details
-#    events:
-#      - http:
-#          path: users/create
-#          method: get
-#      - s3: ${env:BUCKET}
-#      - schedule: rate(10 minutes)
-#      - sns: greeter-topic
-#      - stream: arn:aws:dynamodb:region:XXXXXX:table/foo/stream/1970-01-01T00:00:00.000
-#      - alexaSkill: amzn1.ask.skill.xx-xx-xx-xx
-#      - alexaSmartHome: amzn1.ask.skill.xx-xx-xx-xx
-#      - iot:
-#          sql: "SELECT * FROM 'some_topic'"
-#      - cloudwatchEvent:
-#          event:
-#            source:
-#              - "aws.ec2"
-#            detail-type:
-#              - "EC2 Instance State-change Notification"
-#            detail:
-#              state:
-#                - pending
-#      - cloudwatchLog: '/aws/lambda/hello'
-#      - cognitoUserPool:
-#          pool: MyUserPool
-#          trigger: PreSignUp
-
-#    Define function environment variables here
-#    environment:
-#      variable2: value2
 
 # you can add CloudFormation resource templates here
 resources:
@@ -173,16 +137,4 @@ components:
           defaultThrottlePolicy:
             maxReceivesPerSecond: 3
       deliveryStatusAttributes:
-        # - ApplicationSuccessFeedbackRoleArn: 'arn:aws:iam::000000000000:role/sns-success-feedback-role'
-        #   ApplicationSuccessFeedbackSampleRate: 100
-        #   ApplicationFailureFeedbackRoleArn: 'arn:aws:iam::000000000000:role/sns-failure-feedback-role'
-        # - HTTPSuccessFeedbackRoleArn: 'arn:aws:iam::000000000000:role/sns-success-feedback-role'
-        #   HTTPSuccessFeedbackSampleRate: 100
-        #   HTTPFailureFeedbackRoleArn: 'arn:aws:iam::000000000000:role/sns-failure-feedback-role'
-        # - LambdaSuccessFeedbackRoleArn: 'arn:aws:iam::000000000000:role/sns-success-feedback-role'
-        #   LambdaSuccessFeedbackSampleRate: 100
-        #   LambdaFailureFeedbackRoleArn: 'arn:aws:iam::000000000000:role/sns-success-feedback-role'
-        # - SQSSuccessFeedbackRoleArn: 'arn:aws:iam::000000000000:role/sns-success-feedback-role'
-        #   SQSSuccessFeedbackSampleRate: 100
-        #   SQSFailureFeedbackRoleArn: 'arn:aws:iam::000000000000:role/sns-success-feedback-role'
       name: 'sns-call'
