@@ -12,6 +12,10 @@
             <i class="fa fa-fw fa-bookmark"></i>&nbsp;
             <span>{{ 'Topics' | translate }}</span>
         </a>
+        <a [routerLink]="['/subscriptions']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+          <i class="fa fa-fw fa-bookmark"></i>&nbsp;
+          <span>{{ 'Subscriptions' | translate }}</span>
+      </a>
         <!-- <div class="nested-menu">
             <a class="list-group-item" (click)="addExpandClass('pages')">
                 <i class="fa fa-plus"></i>&nbsp;
