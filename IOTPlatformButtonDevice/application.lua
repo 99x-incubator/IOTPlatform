@@ -4,17 +4,31 @@ dofile("keys.lua")
 dofile("config.lua")
 
 -- function to invoke a post request
-send_request = function(T) 
-  http.post(IOT_ENDPOINT_URL,
-  'Content-Type: application/json\r\n',
-  '{"id": 1,"type": ' .. T .. ',"location": "ground"}',
-  function(code, data)
-    if (code < 0) then
-      print("HTTP request failed")
-    else
-      print(code, data)
-    end
-  end)
+sendrequest = function(T) 
+    conn = nil
+    conn=net.createConnection(net.TCP, 0) 
+
+    conn:on("receive", function(conn, payload) 
+         print(payload) 
+         end) 
+         
+    conn:on("connection", function(conn, payload) 
+         print('\nConnected') 
+         conn:send("GET /trigger/biscuit_oni/with/key/"
+          ..IFTTT_KEY
+          .." HTTP/1.1\r\n" 
+          .."Host: maker.ifttt.com\r\n"
+          .."Accept: */*\r\n" 
+          .."User-Agent: Mozilla/4.0 (compatible; esp8266 Lua; Windows NT 5.1)\r\n" 
+          .."\r\n")
+         end) 
+         
+    conn:on("disconnection", function(conn, payload) 
+          print('\nDisconnected') 
+          end)
+          
+    print('Posting to ifttt.com')                                    
+    conn:connect(80,'maker.ifttt.com')
 end
 
 -- configure buttons
