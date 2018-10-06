@@ -25,6 +25,7 @@ provider:
 
   # you can define service wide environment variables here
   environment:
+    # DYNAMODB_TABLE: ${self:service}-${opt:stage, self:provider.stage}
     GOOGLE_SCRIPT_API_VERSION: v1
     CLIENT_ID: ${self:custom.clientid}
     PROJECT_ID: ${self:custom.projectid}
@@ -82,6 +83,14 @@ functions:
       - http:
           path: /device
           method: post
+          cors: true
+  getSubscriber:
+    handler: handlers/googleSheetAccessHandler.subscriberHandler
+    events:
+      - http:
+          path: /device/subscriber
+          method: get
+          cors: true
 
   test:
     handler: handlers/test.test
