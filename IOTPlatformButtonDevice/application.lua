@@ -18,12 +18,19 @@ send_request = function(T)
 end
 
 -- configure buttons
-buttonPin = 1
-gpio.mode(buttonPin,gpio.INT,gpio.PULLUP)
+buttonPin1 = 1
+buttonPin2 = 2
+buttonPin3 = 3 
+buttonPin4 = 4
+
+gpio.mode(buttonPin1,gpio.INT,gpio.PULLUP)
+gpio.mode(buttonPin2,gpio.INT,gpio.PULLUP)
+gpio.mode(buttonPin3,gpio.INT,gpio.PULLUP)
+gpio.mode(buttonPin4,gpio.INT,gpio.PULLUP)
 
 function debounce (func)
     local last = 0
-    local delay = 200000
+    local delay = 2000
 
     return function (...)
         local now = tmr.now()
@@ -34,12 +41,36 @@ function debounce (func)
     end
 end
 
-function onChange()
-    if gpio.read(buttonPin) == 0 then
-        print("You boinked the button! ")
+function onChangeButton1()
+    if gpio.read(buttonPin1) == 0 then
+        print("You boinked the button 1! ")
         send_request("biscuit")
         tmr.delay(500000)
     end
 end
+function onChangeButton2()
+    if gpio.read(buttonPin2) == 0 then
+        print("You boinked the button 2! ")
+        -- send_request("biscuit")
+        -- tmr.delay(500000)
+    end
+end
+function onChangeButton3()
+    if gpio.read(buttonPin3) == 0 then
+        print("You boinked the button 3! ")
+        -- send_request("biscuit")
+        -- tmr.delay(500000)
+    end
+end
+function onChangeButton4()
+    if gpio.read(buttonPin4) == 0 then
+        print("You boinked the button 4! ")
+        -- send_request("biscuit")
+        -- tmr.delay(500000)
+    end
+end
 
-gpio.trig(buttonPin,"down", debounce(onChange))
+gpio.trig(buttonPin1,"down", debounce(onChangeButton1))
+gpio.trig(buttonPin2,"down", debounce(onChangeButton2))
+gpio.trig(buttonPin3,"down", debounce(onChangeButton3))
+gpio.trig(buttonPin4,"down", debounce(onChangeButton4))
