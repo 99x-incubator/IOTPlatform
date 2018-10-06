@@ -8,6 +8,7 @@ import { NgxSmartModalModule, NgxSmartModalService } from 'ngx-smart-modal';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DataTablesModule } from 'angular-datatables';
 import { UsersService } from './users.service';
+import { UserConfigurations } from '../../constants/app.constants';
 
 @NgModule({
   imports: [
@@ -20,6 +21,6 @@ import { UsersService } from './users.service';
     DataTablesModule
   ],
   declarations: [UsersComponent],
-  providers: [NgxSmartModalService, UsersService]
+  providers: [NgxSmartModalService, UsersService, UserConfigurations]
 })
 export class UsersModule { }
